@@ -4,8 +4,9 @@ from w3lib.url import url_query_cleaner
 import re
 import extruct
 from sys import path
+import os
 
-PATH='/home/jandogonzales/Development/Machine Learning/MTB-Trailz/mtb-project-crawler/crawler/spiders' 
+PATH='/home/jandogonzales/Development/Machine Learning/mtb-project-crawler/crawler/spiders' 
 path.append(PATH)
 from JsonLineParser import JsonLineParser 
 
@@ -22,7 +23,7 @@ class MtbProjectCrawler(CrawlSpider):
     allowed_domains = ['www.mtbproject.com']
     start_urls = ['https://www.mtbproject.com/directory/8009314/albuquerque']
     trail_urls = []
-    jlFile = PATH + "/mtbproject.jl"
+    jlFile = os.getcwd() + "/mtbproject.jl"
 
     # initialize method to open current jsonlines file and find
     # previously crawled urls, that way we don't save twice
@@ -31,7 +32,7 @@ class MtbProjectCrawler(CrawlSpider):
         print("Check the list of parsed urls...")
         # import the JsonLineParser and parse the input jl file 
         parser = JsonLineParser()
-        self.trails_urls = parser.parse(self.jlFile)
+        self.trail_urls = parser.parse(self.jlFile)
         print("----- json lines file parsed -----\n")
 
     # eliminate scraped urls that don't match mtbproject

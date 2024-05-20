@@ -6,7 +6,7 @@ import extruct
 from sys import path
 import os
 
-PATH='/home/jandogonzales/Development/Machine Learning/mtb-project-crawler/crawler/spiders' 
+PATH='/home/jandogonzales/Development/MachineLearning/mtb-project-crawler/crawler/spiders' 
 path.append(PATH)
 from JsonLineParser import JsonLineParser 
 
@@ -21,9 +21,11 @@ def process_links(links):
 class MtbProjectCrawler(CrawlSpider):
     name = 'mtbproject'
     allowed_domains = ['www.mtbproject.com']
-    start_urls = ['https://www.mtbproject.com/directory/8009314/albuquerque']
+    #start_urls = ['https://www.mtbproject.com/directory/8009314/albuquerque']
+    start_urls = ['https://www.mtbproject.com/directory/8006911/arizona']
     trail_urls = []
-    jlFile = os.getcwd() + "/mtbproject.jl"
+    #jlFile = os.getcwd() + "/mtbproject.jl"
+    jlFile = "../../mtbproject.jl"
 
     # initialize method to open current jsonlines file and find
     # previously crawled urls, that way we don't save twice
@@ -36,13 +38,14 @@ class MtbProjectCrawler(CrawlSpider):
         print("----- json lines file parsed -----\n")
 
     # eliminate scraped urls that don't match mtbproject
-    rules = (
+    rules = [ 
         Rule(
+            LinkExtractor(allow='trail/'),
             process_links=process_links,
             callback="parse_item",
             follow=True # allows the following of links from each response
-        ),
-    )
+        )
+    ] 
 
     def parse_item(self, response):
         # extract contents from the trail url

@@ -47,7 +47,7 @@ class MtbProjectCrawler(CrawlSpider):
         self.trail_urls = parser.parse(self.jlFile)
         self.start_urls = find_trail_areas() 
         print(f"start urls len = {len(self.start_urls)}")
-        print(self.start_urls)
+        print(f"start urls 0 = {self.start_urls[0]}") 
         print("----- json lines file parsed -----\n")
 
     # eliminate scraped urls that don't match mtbproject
@@ -74,8 +74,6 @@ class MtbProjectCrawler(CrawlSpider):
                     syntaxes=['opengraph', 'json-ld']
                 )
             }
-            print(data)
-            print("\n")
             yield data 
         else:
-            print(f"URL: {response.url} ALREADY EXISTS!\n") 
+            print(f"URL: {response.url} ALREADY EXISTS!") 
